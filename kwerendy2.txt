@@ -1,0 +1,27 @@
+1.
+a)DELETE FROM postac WHERE nazwa = "Adam";
+DELETE FROM postac WHERE nazwa = "Milomyn";
+
+SHOW CREATE TABLE nazwa_tabeli;
+
+b)ALTER TABLE przetwory DROP FoREIGN KEY przetwory_ibfk_1;
+ALTER TABLE przetwory DROP FoREIGN KEY przetwory_ibfk_2;
+ALTER TABLE walizka DROP FoREIGN KEY walizka_ibfk_1;
+ALTER TABLE postac MODIFY id_postaci int(100);
+ALTER TABLE postac DROP PRIMARY KEY;
+
+2.
+a)ALTER TABLE postac ADD COLUMN pesel int(11);
+ALTER TABLE postac ADD COLUMN pesel int(11) AUTO_INCREMENT, ADD PRIMARY KEY (pesel);
+b)ALTER TABLE postac MODIFY rodzaj enum("wiking","kobieta","ptak","syrena");
+c)INSERT INTO postac (id_postaci, nazwa, rodzaj, data_ur, wiek) VALUES (10,"Gertruda Nieszczera", "Syrena", "1000-01-01",1000);
+
+3.
+a)UPDATE postac SET statek = 'Lodz' WHERE nazwa LIKE '%a%';
+b)UPDATE statek SET max_ladownosc = (max_ladownosc*0.7) WHERE data_wodowania BETWEEN '1901-01-01' AND '2000-01-01';
+c)
+
+4.
+a)INSERT INTO postac(id_postaci,nazwa) VALUES (22,'Loko');
+b)ALTER TABLE postac ADD CHECK (wiek<1001);
+c)
