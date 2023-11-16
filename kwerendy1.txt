@@ -1,0 +1,54 @@
+1. ZADANIE
+a)CREATE TABLE (id_postaci INT AUTO_INCREMENT, nazwa VARCHAR(40),rodzaj ENUM('wiking', 'ptak', 'kobieta'), data_ur DATE, wiek INT UNSIGNED, PRIMARY KEY(id_postaci));
+
+b)INSERT INTO postac (nazwa, rodzaj, data_ur, wiek) VALUES ('Bjorn', 'wiking', '1111-01-12', '56');
+INSERT INTO postac (nazwa, rodzaj, data_ur, wiek) VALUES ('Drozd', 'ptak', '1112-01-12', '3');
+INSERT INTO postac (nazwa, rodzaj, data_ur, wiek) VALUES ('Tesciowa', 'kobieta', '1092-01-12', '78');
+
+c)UPDATE postac SET wiek = '88' WHERE nazwa = "Tesciowa";
+
+2.
+a)CREATE TABLE walizka (id_walizki INT AUTO_INCREMENT, pojemnosc INT UNSIGNED, kolor ENUM('rozowy', 'czerwony', 'teczowy', 'zolty'), id_wlasciciela INT, PRIMARY KEY(id_walizki), FOREIGN KEY(id_wlasciciela) REFERENCES postac(id_postaci));
+
+b)ALTER TABLE walizka ALTER COLUMN kolor SET DEFAULT 'rozowy';
+
+c)INSERT INTO walizka (pojemnosc, id_wlasciciela) VALUES ('10', '3');
+INSERT INTO walizka (pojemnosc, kolor, id_wlasciciela) VALUES ('10','zolty','1');
+
+3.
+a)CREATE TABLE izba (adres_budynku VARCHAR(50), nazwa_izby VARCHAR(70), metraz int UNSIGNED, wlasciciel int null, CONSTRAINT PRIMARY KEY(adres_budynku, nazwa_izby), FOREIGN KEY(wlasciciel) REFERENCES postac(id_postaci));
+
+b) ALTER TABLE izba ADD COLUMN (kolor_izby varchar(50));
+ ALTER TABLE izba MODIFY kolor_izby varchar(50) AFTER metraz;
+ALTER TABLE izba ALTER COLUMN kolor_izby SET DEFAULT 'czarny';
+
+c)INSERT INTO izba (adres_budynku, nazwa_izby, metraz, kolor_izby, wlasciciel) VALUES ("Barcza", "Spizarnia", 50, "Niebieski", 3);
+
+4.
+a)CREATE TABLE przetwory (id_przetworu int PRIMARY KEY, rok_produkcji YEAR, id_wykonawcy int, zawartosc varchar(100), dodatek varchar(100), id_konsumenta int, FOREIGN KEY(id_wykonawcy) REFERENCES postac(id_postaci), FOREIGN KEY(id_konsumenta) REFERENCES postac(id_postaci));
+ALTER TABLE przetwory ALTER COLUMN dodatek SET DEFAULT 'papryczka chilli';
+ALTER TABLE przetwory MODIFY COLUMN rok_produkcji int(4);
+ALTER TABLE przetwory ALTER COLUMN rok_produkcji SET DEFAULT '1654';
+
+b)INSERT INTO przetwory (id_przetworu, rok_produkcji, id_wykonawcy, zawartosc, dodatek, id_konsumenta) VALUES (1, 1654, 2, "bigos", "papryczka chilli", 3);
+
+5.
+a) zrobione
+
+b)CREATE TABLE statek (nazwa_statku varchar(100) PRIMARY KEY, rodzaj_statku enum("duzy","maly"), data_wodowania date, max_ladownosc int UNSIGNED);
+
+c)INSERT INTO statek (nazwa_statku, rodzaj_statku, data_wodowania, max_ladownosc) VALUES ("Kajak", "Maly", "1212-05-31", 4);
+INSERT INTO statek (nazwa_statku, rodzaj_statku, data_wodowania, max_ladownosc) VALUES ("Lodz", "Duzy", "1312-05-31", 14);
+
+d)ALTER TABLE postac ADD COLUMN funkcja varchar(50);
+
+e) UPDATE postac SET funkcja = "kapitan" WHERE nazwa = "Bjorn";
+
+f)ALTER TABLE postac ADD COLUMN statek varchar(50);
+ALTER TABLE postac ADD FOREIGN KEY(statek) REFERENCES statek(nazwa_statku);
+
+g)UPDATE postac SET statek = "Lodz" WHERE nazwa != "tesciowa";
+
+h)DELETE FROM izba WHERE nazwa_izby = "Spizarnia";
+
+i)DROP TABLE izba;
