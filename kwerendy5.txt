@@ -1,0 +1,15 @@
+1.
+CREATE TABLE kreatura_1 AS (SELECT * FROM wikingowie.kreatura);
+CREATE TABLE uczestnicy AS (SELECT * FROM wikingowie.uczestnicy);
+CREATE TABLE etapy_wyprawy AS (SELECT * FROM wikingowie.etapy_wyprawy);
+CREATE TABLE sektor AS (SELECT * FROM wikingowie.sektor);
+CREATE TABLE wyprawa AS (SELECT * FROM wikingowie.wyprawa);
+
+SELECT kreatura_1.nazwa FROM kreatura_1 JOIN uczestnicy ON kreatura_1.idKreatury=uczestnicy.id_uczestnika WHERE uczestnicy.id_wyprawy = 0 OR uczestnicy.id_wyprawy = "NULL";
+
+SELECT wyprawa.nazwa, SUM(ekwipunek.ilosc) AS suma_ekwipunku FROM wyprawa JOIN uczestnicy ON wyprawa.id_wyprawy=uczestnicy.id_wyprawy JOIN kreatura_1 ON uczestnicy.id_uczestnika=kreatura_1.idKreatury JOIN ekwipunek ON kreatura_1.idKreatury=ekwipunek.idKreatury GROUP BY wyprawa.nazwa;
+
+2.
+SELECT wyprawa.nazwa,COUNT(uczestnicy.id_uczestnika), GROUP_CONCAT(kreatura_1.nazwa) FROM wyprawa JOIN uczestnicy ON wyprawa.id_wyprawy=uczestnicy.id_wyprawy JOIN kreatura_1 ON uczestnicy.id_uczestnika=kreatura_1.idKreatury GROUP
+BY wyprawa.nazwa;
+
